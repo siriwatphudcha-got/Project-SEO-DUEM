@@ -1,9 +1,380 @@
 <!DOCTYPE html>
-<html>
+<html lang="th">
 <head>
-    <title>My SEO Project</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DUEM ดื่ม — ร้านนั่งชิลมหาสารคาม</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@200;300;400;500;600;700&family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0a0f;
+    --bg2:#12121c;
+    --neon:#ff2e63;
+    --neon2:#08d9d6;
+    --gold:#f9c80e;
+    --text:#f4f4f8;
+    --muted:#9a9ab0;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Prompt',sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    overflow-x:hidden;
+    line-height:1.7;
+  }
+  h1,h2,h3,.brand{font-family:'Kanit',sans-serif}
+
+  /* ===== NAV ===== */
+  nav{
+    position:fixed;top:0;left:0;width:100%;z-index:100;
+    display:flex;justify-content:space-between;align-items:center;
+    padding:16px 6%;
+    background:rgba(10,10,15,.55);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(255,255,255,.06);
+  }
+  .logo{
+    font-family:'Kanit',sans-serif;font-weight:700;font-size:1.6rem;
+    letter-spacing:3px;color:#fff;
+    text-shadow:0 0 8px var(--neon),0 0 18px var(--neon);
+  }
+  .logo span{color:var(--neon2);text-shadow:0 0 8px var(--neon2)}
+  .nav-links{display:flex;gap:28px;list-style:none}
+  .nav-links a{
+    color:var(--text);text-decoration:none;font-size:.95rem;
+    transition:.25s;position:relative;
+  }
+  .nav-links a:hover{color:var(--neon2)}
+  .nav-links a::after{
+    content:'';position:absolute;left:0;bottom:-6px;width:0;height:2px;
+    background:var(--neon2);transition:.3s;
+  }
+  .nav-links a:hover::after{width:100%}
+  .menu-toggle{display:none;font-size:1.6rem;color:#fff;background:none;border:none;cursor:pointer}
+
+  /* ===== HERO ===== */
+  .hero{
+    min-height:100vh;display:flex;flex-direction:column;
+    justify-content:center;align-items:center;text-align:center;
+    padding:0 6%;position:relative;
+    background:
+      radial-gradient(circle at 20% 30%,rgba(255,46,99,.18),transparent 40%),
+      radial-gradient(circle at 80% 70%,rgba(8,217,214,.15),transparent 45%),
+      linear-gradient(160deg,#0a0a0f 0%,#14141f 100%);
+  }
+  .hero::before{
+    content:'';position:absolute;inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+    background-size:44px 44px;
+    mask-image:radial-gradient(circle at center,black,transparent 75%);
+  }
+  .hero-content{position:relative;z-index:2;animation:fadeUp 1.2s ease}
+  .hero .tag{
+    display:inline-block;padding:6px 18px;border:1px solid var(--neon2);
+    border-radius:30px;color:var(--neon2);font-size:.85rem;
+    letter-spacing:2px;margin-bottom:26px;
+    box-shadow:0 0 14px rgba(8,217,214,.35);
+  }
+  .hero h1{
+    font-size:clamp(4rem,16vw,10rem);font-weight:700;letter-spacing:8px;
+    line-height:.95;
+    color:#fff;
+    text-shadow:0 0 12px var(--neon),0 0 34px var(--neon),0 0 70px rgba(255,46,99,.5);
+    animation:flicker 4s infinite;
+  }
+  .hero h1 .thai{
+    display:block;font-size:clamp(1.4rem,5vw,2.6rem);letter-spacing:14px;
+    margin-top:10px;color:var(--neon2);
+    text-shadow:0 0 10px var(--neon2);
+  }
+  .hero p{max-width:560px;margin:26px auto 0;color:var(--muted);font-size:1.1rem}
+  .btn{
+    display:inline-block;margin-top:36px;padding:15px 40px;
+    background:var(--neon);color:#fff;text-decoration:none;
+    border-radius:40px;font-weight:600;letter-spacing:1px;
+    box-shadow:0 0 22px rgba(255,46,99,.55);transition:.3s;
+  }
+  .btn:hover{transform:translateY(-3px);box-shadow:0 0 34px rgba(255,46,99,.85)}
+  .scroll-hint{
+    position:absolute;bottom:30px;left:50%;transform:translateX(-50%);
+    color:var(--muted);font-size:.8rem;letter-spacing:2px;z-index:2;
+    animation:bounce 2s infinite;
+  }
+
+  /* ===== SECTIONS ===== */
+  section{padding:100px 6%;position:relative}
+  .section-title{
+    text-align:center;font-size:clamp(2rem,5vw,3rem);font-weight:600;
+    margin-bottom:14px;
+  }
+  .section-title span{color:var(--neon);text-shadow:0 0 12px var(--neon)}
+  .section-sub{text-align:center;color:var(--muted);margin-bottom:60px;font-size:1.05rem}
+
+  /* ABOUT */
+  .about{background:linear-gradient(180deg,#0a0a0f,#101018)}
+  .about-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;
+    max-width:1100px;margin:0 auto;
+  }
+  .about-text h3{font-size:2rem;margin-bottom:20px;color:var(--gold)}
+  .about-text p{color:var(--muted);margin-bottom:16px}
+  .about-visual{
+    height:380px;border-radius:20px;position:relative;overflow:hidden;
+    background:
+      radial-gradient(circle at 30% 30%,rgba(255,46,99,.5),transparent 55%),
+      radial-gradient(circle at 70% 70%,rgba(8,217,214,.45),transparent 55%),
+      #16161f;
+    border:1px solid rgba(255,255,255,.08);
+    display:flex;align-items:center;justify-content:center;
+  }
+  .about-visual .big{
+    font-family:'Kanit';font-weight:700;font-size:5rem;letter-spacing:6px;
+    color:rgba(255,255,255,.9);text-shadow:0 0 20px var(--neon);
+  }
+
+  /* FEATURES */
+  .features-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:26px;max-width:1150px;margin:0 auto;
+  }
+  .feature-card{
+    background:var(--bg2);border:1px solid rgba(255,255,255,.07);
+    border-radius:18px;padding:36px 28px;text-align:center;transition:.35s;
+  }
+  .feature-card:hover{
+    transform:translateY(-8px);border-color:var(--neon2);
+    box-shadow:0 14px 40px rgba(8,217,214,.15);
+  }
+  .feature-card .ico{font-size:2.6rem;margin-bottom:16px}
+  .feature-card h4{font-family:'Kanit';font-size:1.25rem;margin-bottom:10px}
+  .feature-card p{color:var(--muted);font-size:.95rem}
+
+  /* MENU */
+  .menu{background:linear-gradient(180deg,#101018,#0a0a0f)}
+  .menu-wrap{max-width:900px;margin:0 auto}
+  .menu-cat{
+    font-family:'Kanit';font-size:1.5rem;color:var(--neon2);
+    margin:40px 0 20px;letter-spacing:2px;
+    border-left:4px solid var(--neon2);padding-left:14px;
+  }
+  .menu-item{
+    display:flex;justify-content:space-between;align-items:baseline;
+    padding:14px 0;border-bottom:1px dashed rgba(255,255,255,.12);
+  }
+  .menu-item .name{font-size:1.05rem}
+  .menu-item .dots{flex:1;border-bottom:1px dotted rgba(255,255,255,.2);margin:0 12px}
+  .menu-item .price{color:var(--gold);font-weight:600;font-family:'Kanit'}
+  .menu-note{text-align:center;color:var(--muted);font-size:.85rem;margin-top:30px}
+
+  /* GALLERY */
+  .gallery-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+    gap:16px;max-width:1150px;margin:0 auto;
+  }
+  .gallery-grid div{
+    height:220px;border-radius:14px;position:relative;overflow:hidden;
+    border:1px solid rgba(255,255,255,.06);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Kanit';color:rgba(255,255,255,.55);font-size:1.1rem;
+    transition:.4s;
+  }
+  .gallery-grid div:hover{transform:scale(1.03);color:#fff}
+  .g1{background:radial-gradient(circle at 40% 40%,rgba(255,46,99,.5),#14141f)}
+  .g2{background:radial-gradient(circle at 60% 30%,rgba(8,217,214,.5),#14141f)}
+  .g3{background:radial-gradient(circle at 50% 60%,rgba(249,200,14,.45),#14141f)}
+  .g4{background:radial-gradient(circle at 30% 70%,rgba(255,46,99,.4),#14141f)}
+  .g5{background:radial-gradient(circle at 70% 50%,rgba(8,217,214,.4),#14141f)}
+  .g6{background:radial-gradient(circle at 50% 40%,rgba(180,80,255,.45),#14141f)}
+
+  /* CONTACT */
+  .contact{background:linear-gradient(180deg,#0a0a0f,#12121c);text-align:center}
+  .contact-card{
+    max-width:640px;margin:0 auto;background:var(--bg2);
+    border:1px solid rgba(255,255,255,.08);border-radius:22px;padding:50px 40px;
+    box-shadow:0 0 40px rgba(255,46,99,.08);
+  }
+  .contact-card .row{margin:16px 0;font-size:1.05rem}
+  .contact-card .row b{color:var(--neon2);font-family:'Kanit';margin-right:8px}
+  .contact-card a{color:var(--gold);text-decoration:none}
+  .hours{
+    display:inline-block;margin-top:20px;padding:10px 26px;
+    background:rgba(8,217,214,.12);border:1px solid var(--neon2);
+    border-radius:30px;color:var(--neon2);font-family:'Kanit';letter-spacing:1px;
+  }
+
+  /* FOOTER */
+  footer{
+    text-align:center;padding:40px 6%;background:#08080d;
+    border-top:1px solid rgba(255,255,255,.06);color:var(--muted);font-size:.9rem;
+  }
+  footer .logo{font-size:1.3rem;margin-bottom:10px}
+  .disclaimer{font-size:.75rem;margin-top:14px;opacity:.6;max-width:640px;margin-left:auto;margin-right:auto}
+
+  /* ANIMATIONS */
+  @keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes flicker{
+    0%,19%,21%,23%,80%,100%{opacity:1}
+    20%,22%{opacity:.7}
+  }
+  @keyframes bounce{0%,100%{transform:translate(-50%,0)}50%{transform:translate(-50%,10px)}}
+  .reveal{opacity:0;transform:translateY(40px);transition:.8s}
+  .reveal.show{opacity:1;transform:translateY(0)}
+
+  /* RESPONSIVE */
+  @media(max-width:768px){
+    .nav-links{
+      position:fixed;top:64px;right:-100%;flex-direction:column;
+      background:rgba(10,10,15,.97);width:70%;height:100vh;
+      padding:40px 30px;gap:26px;transition:.4s;
+    }
+    .nav-links.open{right:0}
+    .menu-toggle{display:block}
+    .about-grid{grid-template-columns:1fr;gap:36px}
+    section{padding:70px 6%}
+  }
+</style>
 </head>
 <body>
-    <h1>Hello SEO World!</h1>
+
+<nav>
+  <div class="logo">DU<span>EM</span></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#home">หน้าแรก</a></li>
+    <li><a href="#about">เกี่ยวกับร้าน</a></li>
+    <li><a href="#features">จุดเด่น</a></li>
+    <li><a href="#menu">เมนู</a></li>
+    <li><a href="#gallery">บรรยากาศ</a></li>
+    <li><a href="#contact">ติดต่อ</a></li>
+  </ul>
+  <button class="menu-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="home">
+  <div class="hero-content">
+    <span class="tag">CHILL BAR · มหาสารคาม</span>
+    <h1>DUEM<span class="thai">ดื่ม</span></h1>
+    <p>ร้านนั่งชิลสุดฮิตย่านท่าขอนยาง มมส. บรรยากาศดี เพลงเพราะ ค็อกเทลเด็ด — ที่ที่ทุกค่ำคืนกลายเป็นเรื่องเล่าดี ๆ</p>
+    <a href="#contact" class="btn">พิกัด &amp; จองโต๊ะ</a>
+  </div>
+  <div class="scroll-hint">▼ เลื่อนลงเลย</div>
+</header>
+
+<!-- ABOUT -->
+<section class="about reveal" id="about">
+  <h2 class="section-title">เกี่ยวกับ <span>ร้านดื่ม</span></h2>
+  <p class="section-sub">มากกว่าร้านนั่งดื่ม คือพื้นที่ปล่อยใจของชาวสารคาม</p>
+  <div class="about-grid">
+    <div class="about-visual"><span class="big">ดื่ม</span></div>
+    <div class="about-text">
+      <h3>นั่งชิล จิบเบา ๆ ในบรรยากาศที่ใช่</h3>
+      <p>“ดื่ม — DUEM” เป็นร้านกึ่งผับ/บาร์นั่งชิลชื่อดังของจังหวัดมหาสารคาม ตั้งอยู่ย่านท่าขอนยาง ใกล้มหาวิทยาลัยมหาสารคาม เป็นจุดนัดพบยอดฮิตของทั้งนักศึกษาและคนทำงาน</p>
+      <p>จุดเด่นที่ลูกค้าติดใจคือบรรยากาศเป็นกันเอง เพลงเพราะโดนใจ และค็อกเทลที่ทำสด พร้อมเสียงดนตรีและดีเจที่ทำให้ทุกค่ำคืนไม่น่าเบื่อ</p>
+      <p>ไม่ว่าจะมาเดี่ยว มากับแก๊งเพื่อน หรือแวะมาชิลหลังเลิกเรียน/เลิกงาน ที่นี่พร้อมต้อนรับให้คุณได้ผ่อนคลายเต็มที่</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features reveal" id="features">
+  <h2 class="section-title">ทำไมต้อง <span>ดื่ม</span></h2>
+  <p class="section-sub">4 เหตุผลที่ทำให้ที่นี่เป็นร้านโปรดของชาวสารคาม</p>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="ico">🍸</div>
+      <h4>ค็อกเทลทำสด</h4>
+      <p>ค็อกเทลซิกเนเจอร์ ผสมสดทุกแก้ว รสชาติจัดเต็ม</p>
+    </div>
+    <div class="feature-card">
+      <div class="ico">🎧</div>
+      <h4>เพลง &amp; ดีเจ</h4>
+      <p>ดนตรีและดีเจคุมโทน สร้างบรรยากาศสุดปัง</p>
+    </div>
+    <div class="feature-card">
+      <div class="ico">🌃</div>
+      <h4>บรรยากาศชิล</h4>
+      <p>โทนไฟนีออนสวย ๆ นั่งสบาย ถ่ายรูปสวยทุกมุม</p>
+    </div>
+    <div class="feature-card">
+      <div class="ico">🍻</div>
+      <h4>เครื่องดื่มครบ</h4>
+      <p>เบียร์ โซจู เหล้า มิกเซอร์ ครบทุกสายดื่ม</p>
+    </div>
+  </div>
+</section>
+
+<!-- MENU -->
+<section class="menu reveal" id="menu">
+  <h2 class="section-title">เมนู <span>เครื่องดื่ม</span></h2>
+  <p class="section-sub">ราคาสบายกระเป๋าสไตล์เมืองมอ</p>
+  <div class="menu-wrap">
+    <div class="menu-cat">🍺 เบียร์</div>
+    <div class="menu-item"><span class="name">สิงห์</span><span class="dots"></span><span class="price">฿99</span></div>
+    <div class="menu-item"><span class="name">ลีโอ</span><span class="dots"></span><span class="price">฿89</span></div>
+    <div class="menu-item"><span class="name">ช้าง</span><span class="dots"></span><span class="price">฿89</span></div>
+    <div class="menu-item"><span class="name">บัดไวเซอร์</span><span class="dots"></span><span class="price">฿119</span></div>
+    <div class="menu-item"><span class="name">มาย (MY)</span><span class="dots"></span><span class="price">฿85</span></div>
+
+    <div class="menu-cat">🍶 โซจู &amp; เหล้า</div>
+    <div class="menu-item"><span class="name">โซจู(หลากรส)</span><span class="dots"></span><span class="price">สอบถามหน้าร้าน</span></div>
+    <div class="menu-item"><span class="name">เหล้า / มิกเซอร์</span><span class="dots"></span><span class="price">สอบถามหน้าร้าน</span></div>
+
+    <div class="menu-cat">🍸 ค็อกเทล</div>
+    <div class="menu-item"><span class="name">Signature Cocktails</span><span class="dots"></span><span class="price">สอบถามหน้าร้าน</span></div>
+  </div>
+  <p class="menu-note">* ราคาอ้างอิงจากข้อมูลออนไลน์ อาจมีการเปลี่ยนแปลง กรุณาสอบถามที่ร้านอีกครั้ง</p>
+</section>
+
+<!-- GALLERY -->
+<section class="gallery reveal" id="gallery">
+  <h2 class="section-title">บรรยากาศ <span>ร้าน</span></h2>
+  <p class="section-sub">มุมไหนก็ชิล ถ่ายรูปสวยทุกช็อต</p>
+  <div class="gallery-grid">
+    <div class="g1">Neon Vibes</div>
+    <div class="g2">Chill Corner</div>
+    <div class="g3">Live Music</div>
+    <div class="g4">Cocktail Bar</div>
+    <div class="g5">Night Mood</div>
+    <div class="g6">Friends &amp; Fun</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact reveal" id="contact">
+  <h2 class="section-title">ติดต่อ &amp; <span>พิกัด</span></h2>
+  <p class="section-sub">แวะมาดื่มกันได้ทุกค่ำคืน</p>
+  <div class="contact-card">
+    <div class="row"><b>📍 ที่อยู่:</b> ต.ท่าขอนยาง อ.กันทรวิชัย จ.มหาสารคาม (ย่าน มมส.)</div>
+    <div class="row"><b>📞 โทร:</b> <a href="tel:0929094626">092-909-4626</a> , <a href="tel:0956652623">095-665-2623</a></div>
+    <div class="row"><b>📱 Facebook:</b> <a href="https://www.facebook.com/p/%E0%B8%94%E0%B8%B7%E0%B9%88%E0%B8%A1-Duem-%E0%B8%A1%E0%B8%AB%E0%B8%B2%E0%B8%AA%E0%B8%B2%E0%B8%A3%E0%B8%84%E0%B8%B2%E0%B8%A1-61558286816119/" target="_blank">ดื่ม - Duem มหาสารคาม</a></div>
+    <div class="hours">🕔 เปิดบริการทุกวัน 17.00 - 24.00 น.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="logo">DU<span style="color:var(--neon2)">EM</span></div>
+  <p>ร้านดื่ม — ร้านนั่งชิลมหาสารคาม</p>
+  <p style="margin-top:8px">© 2026 DUEM Mahasarakham · ดื่มอย่างมีสติ · ดื่มไม่ขับ</p>
+  <p class="disclaimer">เว็บไซต์นี้จัดทำขึ้นเพื่อการนำเสนอ/สาธิต ข้อมูลร้าน (ที่อยู่ เบอร์โทร เวลาทำการ ราคา) รวบรวมจากแหล่งข้อมูลออนไลน์สาธารณะ อาจไม่เป็นปัจจุบัน กรุณาตรวจสอบกับทางร้านโดยตรงก่อนใช้บริการ</p>
+</footer>
+
+<script>
+  // scroll reveal
+  const reveals=document.querySelectorAll('.reveal');
+  const io=new IntersectionObserver(es=>{
+    es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')})
+  },{threshold:.15});
+  reveals.forEach(r=>io.observe(r));
+
+  // close mobile menu on link click
+  document.querySelectorAll('.nav-links a').forEach(a=>{
+    a.addEventListener('click',()=>document.getElementById('navLinks').classList.remove('open'));
+  });
+</script>
 </body>
 </html>
